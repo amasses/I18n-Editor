@@ -35,7 +35,7 @@ a.edit
     color: mediumpurple;
 }
 
-span.links
+span.links, a.edit_translation
 {
     font-size: xx-small;
 }
