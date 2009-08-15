@@ -3,6 +3,8 @@ I18n Editor
 
 Editing YAML files by hand is such a pain, so I decided to create a simple Rails app to do this.
 
+To use, simply pull down the repo (e.g. `git-clone`), then run `script/server` and point your browser at `http://localhost:3000`
+
 Yes, I suppose this would be more lightweight as a Sinatra app, or a Rack app, or whatever, but hey, this is
 what I chose to do.
 
