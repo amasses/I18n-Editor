@@ -1,9 +1,11 @@
 <h1>Translations</h1>
 
+<a href="/editor/add_translation">Add new translation</a> |
+<a href="/editor/clear_seleted_files">Clear Translation File Selection</a>
 <p>Note, we are using <strong>en</strong> as the default language...
 <ul>
   <% @base_translations.each_pair do |key, value| %>
-    <li><span class="key"><%= key %></span>
+    <li><span class="key"><%= key %></span><a name="<%= key %>"></a>
         <span class="links"><a href="/editor/rename_translation?key=<%= key %>" class="edit">rename</a> |
         <a href="/editor/delete_translation?key=<%= key %>" class="delete" onclick="return confirm('Are you sure? This cannot be reversed!');">delete</a></span>
         <ul>

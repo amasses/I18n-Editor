@@ -90,7 +90,7 @@ class EditorController < ApplicationController
     end
 
     flash[:notice] = "Renamed <strong>#{key}</strong> to <strong>#{new_key}</strong>"
-    redirect_to "/editor/show_translations"
+    redirect_to "/editor/show_translations##{new_key}"
   end
 
   def save_translation
@@ -102,6 +102,23 @@ class EditorController < ApplicationController
       # Just set the new value!
       translations[key] = new_value if lang == language
     end
+  end
+
+  def save_new_translation
+    if params[:key_name].nil? or params[:key_name].empty?
+      flash[:notice] = "A translation key name is required."
+      redirect_to "/editor/add_translation" and return
+    end
+
+    key = params[:key_name].gsub(/[^a-z0-9]/i, "_")
+    trans_entries = params[:value]
+
+    manipulate_files do |lang, translations|
+      translations[key] = trans_entries[lang]
+    end
+
+    flash[:notice] = "New translation has been created"
+    redirect_to "/editor/show_translations##{key}"
   end
 
   def index
@@ -124,6 +141,12 @@ class EditorController < ApplicationController
   def get_files
     begin
       @files = FileListStore.get_files
+
+      @languages = []
+      manipulate_files do |lang, translations|
+         @languages << lang unless @languages.include? lang
+      end
+      
     rescue
       flash[:notice] = "Couldn't find the list of files selected - please start again."
       redirect_to "/editor/choose_directory" and return

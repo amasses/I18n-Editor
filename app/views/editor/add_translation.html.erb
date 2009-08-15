@@ -1,2 +1,18 @@
-<h1>Editor#add_translation</h1>
-<p>Find me in app/views/editor/add_translation.html.erb</p>
+<h1>Add a translation</h1>
+
+<form method="post" action="save_new_translation">
+            <label for="key_name">Translation (Key) Name</label>
+            <input type="text" name="key_name" id="key_name" />
+    <fieldset>
+        <legend>Language Translation Values</legend>
+        <ul>
+          <% @languages.each do |lang| %>
+            <li>
+                <label for="value_<%= lang %>"><%= lang.humanize %></label>
+                <input type="text" name="value[<%=lang %>]" id="value_<%= lang %>" />
+            </li>
+          <% end %>
+        </ul>
+      </fieldset>
+    <button type="submit">Save new Translation</button>
+</form>
