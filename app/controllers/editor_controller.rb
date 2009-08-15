@@ -1,6 +1,8 @@
 require 'ftools'
 
 class EditorController < ApplicationController
+  before_filter :get_files, :except => [:choose_directory, :select_files, :set_files]
+
   def choose_directory
   end
 
@@ -20,7 +22,7 @@ class EditorController < ApplicationController
       redirect_to "/editor/choose_directory" and return
     end
 
-    session[:files] = params[:selected_files]
+    FileListStore.store_files params[:selected_files]
     # Backup files!
     params[:selected_files].each do |file|
       File.copy(file, "#{file}.backup")
@@ -32,11 +34,17 @@ class EditorController < ApplicationController
     redirect_to "/editor/show_translations"
   end
 
+  def clear_selected_files
+    FileListStore.clear_files
+    flash[:notice] = "The selected file list has been cleared."
+    redirect_to "/editor/choose_directory"
+  end
+
   def show_translations
     @translations = {}
 
-    files = session[:files]
-    files.each do |file|
+
+    @files.each do |file|
       yaml = YAML.load_file(file)
       @translations.merge!(yaml)
     end
@@ -101,8 +109,7 @@ class EditorController < ApplicationController
 
   private 
   def manipulate_files
-    files = session[:files]
-    files.each do |file|
+    @files.each do |file|
       yaml = YAML.load_file file
       yaml.each_pair do |lang, translations|
         yield lang, translations
@@ -111,6 +118,15 @@ class EditorController < ApplicationController
       File.open(file, 'w') do |out|
         YAML.dump(yaml, out)
       end
+    end
+  end
+
+  def get_files
+    begin
+      @files = FileListStore.get_files
+    rescue
+      flash[:notice] = "Couldn't find the list of files selected - please start again."
+      redirect_to "/editor/choose_directory" and return
     end
   end
 end
