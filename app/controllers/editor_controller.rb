@@ -48,6 +48,18 @@ class EditorController < ApplicationController
   end
 
   def delete_translation
+    if params[:key].nil?
+      flash[:notice] = "Please select a translation to be deleted."
+      redirect_to "/editor/show_translations" and return
+    end
+    key = params[:key]
+
+    manipulate_files do |lang, translation|
+      translation.delete(key)
+    end
+
+    flash[:notice] = "Deleted the translation <strong>#{key}</strong>!"
+    redirect_to "/editor/show_translations"
   end
 
   def rename_translation
@@ -64,18 +76,13 @@ class EditorController < ApplicationController
     key = params[:original_key]
     new_key = params[:new_translation_name]
     
-    files = session[:files]
-    files.each do |file|
-      yaml = YAML.load_file file
-      yaml.each_pair do |lang, translations|
-
-          orig = translations.delete(key)
-          translations[key] = orig
-      end
-
-      
+    manipulate_files do |lang, translations|
+      orig = translations.delete(key)
+      translations[new_key] = orig
     end
-    
+
+    flash[:notice] = "Renamed <strong>#{key}</strong> to <strong>#{new_key}</strong>"
+    redirect_to "/editor/show_translations"
   end
 
   def save_translation
@@ -84,4 +91,18 @@ class EditorController < ApplicationController
   def index
   end
 
+  private 
+  def manipulate_files
+    files = session[:files]
+    files.each do |file|
+      yaml = YAML.load_file file
+      yaml.each_pair do |lang, translations|
+        yield lang, translations
+      end
+
+      File.open(file, 'w') do |out|
+        YAML.dump(yaml, out)
+      end
+    end
+  end
 end
