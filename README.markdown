@@ -1,4 +1,5 @@
-== I18n Editor ==
+I18n Editor
+===========
 
 Editing YAML files by hand is such a pain, so I decided to create a simple Rails app to do this.
 
