@@ -44,3 +44,10 @@ span.primary
 {
     font-weight: bold;
 }
+
+span.key
+{
+    font-size: 1.5em;
+    font-weight: bold;
+    color: lightseagreen;
+}

@@ -3,7 +3,7 @@
 <p>Note, we are using <strong>en</strong> as the default language...
 <ul>
   <% @base_translations.each_pair do |key, value| %>
-    <li><%= key %>
+    <li><span class="key"><%= key %></span>
         <span class="links"><a href="/editor/rename_translation?key=<%= key %>" class="edit">rename</a> |
         <a href="/editor/delete_translation?key=<%= key %>" class="delete" onclick="return confirm('Are you sure? This cannot be reversed!');">delete</a></span>
         <ul>
