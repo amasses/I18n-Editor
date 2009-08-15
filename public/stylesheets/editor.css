@@ -39,3 +39,8 @@ span.links
 {
     font-size: xx-small;
 }
+
+span.primary
+{
+    font-weight: bold;
+}

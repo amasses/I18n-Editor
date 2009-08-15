@@ -8,12 +8,14 @@
         <a href="/editor/delete_translation?key=<%= key %>" class="delete" onclick="return confirm('Are you sure? This cannot be reversed!');">delete</a></span>
         <ul>
           <li><span class="lang">en</span>
-            <strong><%=o truncate(value, 100) %></strong>
+            <span class="translation primary"><%=o truncate(value, 100) %></span>
+            <a href="#" class="edit_translation" data-key="<%= key %>" data-value="<%= value %>" data-lang="en">edit</a>
           </li>
           <% @translations.each_pair do |lang, translations| %>
             <li>
               <span class="lang"><%= lang %></span>
-              <%=o truncate(translations[key] ||= "No translation found", 40)%>
+              <span class="translation"><%=o truncate(translations[key] ||= "No translation found", 40)%></span>
+              <a href="#" class="edit_translation" data-key="<%= key %>" data-value="<%= translations[key] %>" data-lang="<%= lang %>">edit</a>
             </li>
           <% end %>
         </ul>

@@ -86,6 +86,14 @@ class EditorController < ApplicationController
   end
 
   def save_translation
+    language = params[:language]
+    key = params[:trans_key]
+    new_value = params[:value]
+
+    manipulate_files do |lang, translations|
+      # Just set the new value!
+      translations[key] = new_value if lang == language
+    end
   end
 
   def index
