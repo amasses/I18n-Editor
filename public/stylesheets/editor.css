@@ -1,0 +1,31 @@
+body
+{
+    font-family: verdana;
+}
+
+span.empty
+{
+    font-weight: bold;
+    color: blue;
+}
+
+span.lang
+{
+    font-size: smaller;
+    color: green;
+}
+
+a.delete
+{
+    color: red;
+}
+
+a.edit
+{
+    color: mediumpurple;
+}
+
+span.links
+{
+    font-size: xx-small;
+}

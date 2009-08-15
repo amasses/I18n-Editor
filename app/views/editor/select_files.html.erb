@@ -1,0 +1,15 @@
+<h1>Select the files you wish to edit</h1>
+
+<small><a href="#" onclick="$('files_form').getInputs('checkbox').each(function(e){ e.checked = true; }); return false;">Check All</a> |
+<a href="#" onclick="$('files_form').getInputs('checkbox').each(function(e){ e.checked = false; }); return false;">Uncheck All</a> |
+<a href="#" onclick="$('files_form').getInputs('checkbox').each(function(e){ e.checked = !e.checked; }); return false;">Invert Selection</a></small>
+<form method="post" action="set_files" id="files_form">
+    <ul>
+    <% @files.each do |file| %>
+        <li><input type="checkbox" name="selected_files[]" value="<%= file %>" id="file_<%= file.underscore %>" />
+          <label for="file_<%= file.underscore %>"><%= file %></label></li>
+    <% end %>
+    </ul>
+
+    <button type="submt">Next &rarr;</button>
+</form>    

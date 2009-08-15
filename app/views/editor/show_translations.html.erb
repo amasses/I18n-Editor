@@ -1,0 +1,22 @@
+<h1>Translations</h1>
+
+<p>Note, we are using <strong>en</strong> as the default language...
+<ul>
+  <% @base_translations.each_pair do |key, value| %>
+    <li><%= key %>
+        <span class="links"><a href="/editor/rename_translation?key=<%= key %>" class="edit">rename</a> |
+        <a href="/editor/delete_translation?key=<%= key %>" class="delete" onclick="return confirm('Are you sure? This cannot be reversed!');">delete</a></span>
+        <ul>
+          <li><span class="lang">en</span>
+            <strong><%=o truncate(value, 100) %></strong>
+          </li>
+          <% @translations.each_pair do |lang, translations| %>
+            <li>
+              <span class="lang"><%= lang %></span>
+              <%=o truncate(translations[key] ||= "No translation found", 40)%>
+            </li>
+          <% end %>
+        </ul>
+    </li>
+  <% end %>
+</ul>
