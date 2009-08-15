@@ -1,2 +1,10 @@
-<h1>Editor#rename_translation</h1>
-<p>Find me in app/views/editor/rename_translation.html.erb</p>
+<h1>Rename Translation</h1>
+
+<form action="save_rename_translation" method="post">
+    <input type="hidden" name="original_key" value="<%= @translation %>" />
+    <label for="new_name">Rename the translation <strong><%= @translation %></strong> to:</label>
+    <input type="text" name="new_translation_name" id="new_name" value="<%= @translation %>" />
+
+    <button type="submit">Save</button>
+    <button type="reset" onclick="history.go(-1);">Cancel</button>
+</form>

@@ -3,6 +3,16 @@ body
     font-family: verdana;
 }
 
+div.flash
+{
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid forestgreen;
+    width: 500px;
+    text-align: center;
+    padding: 10px;
+}
+
 span.empty
 {
     font-weight: bold;
