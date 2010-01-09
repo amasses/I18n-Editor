@@ -4,6 +4,7 @@ class EditorController < ApplicationController
   before_filter :get_files, :except => [:choose_directory, :select_files, :set_files]
 
   def choose_directory
+    @dir = session[:chosen_directory]
   end
 
   def select_files
@@ -12,8 +13,15 @@ class EditorController < ApplicationController
       redirect_to "/editor/choose_directory" and return
     end
 
+    session[:chosen_directory] = params[:directory]
     dir = params[:directory]
-    @files = Dir.glob("#{dir}*.yml")
+    dir = "#{dir}/" unless dir.ends_with? "/"
+    @files = Dir["#{dir}*.yml"]
+    
+    if @files.size == 0
+      flash[:notice] = "No .yml files in '#{dir}'..."
+      redirect_to "/editor/choose_directory" and return
+    end
   end
 
   def set_files

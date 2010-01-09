@@ -4,6 +4,6 @@
 <p>Note: All .yml files in this directory will be listed for you to select</p>
 
 <form method="post" action="/editor/select_files">
-  <label for="directory">Directory: </label><input type="text" name="directory" id="directory" />
+  <label for="directory">Directory: </label><input type="text" name="directory" id="directory" value="<%= @dir %>" />
   <button type="submit">Next &rarr;</button>
 </form>
